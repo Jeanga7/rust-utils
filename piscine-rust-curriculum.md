@@ -8,17 +8,17 @@
 
 Exercices:
 
-- fibonacci2 | https://github.com/01-edu/public/tree/master/subjects/fibonacci2
-- scalar | https://github.com/01-edu/public/tree/master/subjects/scalar
-- temperature-conv | https://github.com/01-edu/public/tree/master/subjects/temperature-conv
-- looping | https://github.com/01-edu/public/tree/master/subjects/looping
-- speed-transformation | https://github.com/01-edu/public/tree/master/subjects/speed-transformation
-- groceries | https://github.com/01-edu/public/tree/master/subjects/groceries
-- reverse-string | https://github.com/01-edu/public/tree/master/subjects/reverse-string
-- find-factorial | https://github.com/01-edu/public/tree/master/subjects/find-factorial
-- matrix-transposition | https://github.com/01-edu/public/tree/master/subjects/matrix-transposition
-- division-and-remainder | https://github.com/01-edu/public/tree/master/subjects/division-and-remainder
-- tuples | https://github.com/01-edu/public/tree/master/subjects/tuples
+- [fibonacci2]( https://github.com/01-edu/public/tree/master/subjects/fibonacci2)
+- [scalar]( https://github.com/01-edu/public/tree/master/subjects/scalar)
+- [temperature-conv]( https://github.com/01-edu/public/tree/master/subjects/temperature-conv)
+- [looping]( https://github.com/01-edu/public/tree/master/subjects/looping)
+- [speed-transformation]( https://github.com/01-edu/public/tree/master/subjects/speed-transformation)
+- [groceries]( https://github.com/01-edu/public/tree/master/subjects/groceries)
+- [reverse-string](https://github.com/01-edu/public/tree/master/subjects/reverse-string)
+- [find-factorial](https://github.com/01-edu/public/tree/master/subjects/find-factorial)
+- [matrix-transposition]( https://github.com/01-edu/public/tree/master/subjects/matrix-transposition)
+- [division-and-remainder]( https://github.com/01-edu/public/tree/master/subjects/division-and-remainder)
+- [tuples]( https://github.com/01-edu/public/tree/master/subjects/tuples)
 
 
 ### Quest 02-rust
