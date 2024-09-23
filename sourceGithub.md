@@ -1,0 +1,1 @@
+[repo source](https://beta.01-edu.org/git/root/public/src/commit/296879596036ec7a729be9e7d423cbd7b55d678c/docs/piscine-rust-curriculum.md)

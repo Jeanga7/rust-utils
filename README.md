@@ -1,0 +1,1 @@
+[github Solution](https://github.com/xxSvalbardxx/piscine-rust/tree/master)
