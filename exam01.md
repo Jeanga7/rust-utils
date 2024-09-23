@@ -1,14 +1,14 @@
 - **Niveau 1 (2800 XP chacun) :**
-  - Division and Remainder
-  - Matrix Transposition
+  - [division-and-remainder]( https://github.com/01-edu/public/tree/master/subjects/division-and-remainder)
+  - [matrix-transposition]( https://github.com/01-edu/public/tree/master/subjects/matrix-transposition)
 
 - **Niveau 2 (5600 XP chacun) :**
-  - Reverse It
-  - Bigger
-  - Capitalizing
+  - [Reverse It](https://github.com/01-edu/public/tree/master/subjects/reverse_it)
+  - [Bigger](https://github.com/01-edu/public/tree/master/subjects/bigger)
+  - [Capitalizing](https://github.com/01-edu/public/tree/master/subjects/capitalizing)
 
 - **Niveau 3 (8400 XP chacun) :**
-  - Counting Words
+  - [Counting Words](https://github.com/01-edu/public/tree/master/subjects/counting_words)
   - Partial Sums
   - Inverted Pyramid
 
