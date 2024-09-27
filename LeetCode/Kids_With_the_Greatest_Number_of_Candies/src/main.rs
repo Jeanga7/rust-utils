@@ -1,0 +1,19 @@
+/* impl Solution {
+    pub fn kids_with_candies(candies: Vec<i32>, extra_candies: i32) -> Vec<bool> {
+        let mut result = Vec::new();
+        let mut max_candies = *candies.iter().max().unwrap();
+
+        for &candy in candies.iter(){
+            result.push(candy + extra_candies >= max_candies)
+        }
+
+        result
+    }
+} */
+
+impl Solution {
+    pub fn kids_with_candies(candies: Vec<i32>, extra_candies: i32) -> Vec<bool> {
+        let max_candies = *candies.iter().max().unwrap();
+        candies.iter().map(|&candy| candy + extra_candies >= max_candies).collect()
+    }
+}

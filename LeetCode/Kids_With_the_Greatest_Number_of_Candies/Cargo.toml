@@ -1,0 +1,6 @@
+[package]
+name = "Kids_With_the_Greatest_Number_of_Candies"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
