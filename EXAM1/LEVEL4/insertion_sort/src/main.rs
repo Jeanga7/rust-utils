@@ -1,4 +1,4 @@
-pub fn insertion_sort(slice: &mut [i32], steps: usize) {
+/* pub fn insertion_sort(slice: &mut [i32], steps: usize) {
     for i in 1..=steps.min(slice.len() - 1) {
         let mut j = i;
         while j > 0 && slice[j - 1] > slice[j] {
@@ -8,6 +8,7 @@ pub fn insertion_sort(slice: &mut [i32], steps: usize) {
     }
 }
 
+ */
 pub fn insertion_sort(slice: &mut [i32], steps: usize) {
    (slice.split_mut(steps+1).0).sort()
 }

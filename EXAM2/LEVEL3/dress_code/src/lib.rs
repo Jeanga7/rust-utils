@@ -24,12 +24,11 @@ pub fn choose_outfit(formality_level: Option<u32>, invitation_message: Result<&s
         Some(j) if j > 0 => Jacket::White,
         _ => Jacket::Black,
     };
-    
+
     let hat = match (formality_level, &invitation_message) {
         (_, Ok(_)) => Hat::Fedora,
         (None, Err(_)) => Hat::Baseball,
         _=> Hat::Snapback,
     };
-
     Outfit{jacket, hat}
 }
