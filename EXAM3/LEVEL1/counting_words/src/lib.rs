@@ -1,14 +1,18 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+use std::collections::HashMap;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+pub fn counting_words(words: &str) -> HashMap<String, u32> {
+    let mut word_count = HashMap::new();
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    let cleaned_words = words
+        .to_lowercase()
+        .replace(|c: char| {
+            !(c.is_alphanumeric() || c == '\'' || c.is_whitespace())
+        }, "");
+
+    for word in cleaned_words.split_whitespace() {
+        let clean_word = word.trim_matches('\''); 
+        *word_count.entry(clean_word.to_string()).or_insert(0) += 1;
     }
+
+    word_count
 }
