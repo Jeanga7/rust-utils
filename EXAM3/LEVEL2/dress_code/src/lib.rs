@@ -1,14 +1,35 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+#[derive(Debug, PartialEq, Eq)]
+pub struct Outfit {
+    pub jacket: Jacket,
+    pub hat: Hat,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+#[derive(Debug, PartialEq, Eq)]
+pub enum Jacket {
+    Black,
+    White,
+    Flowers,
 }
+
+#[derive(Debug, PartialEq, Eq)]
+pub enum Hat {
+    Snapback,
+    Baseball,
+    Fedora,
+}
+
+pub fn choose_outfit(formality_level: Option<u32>, invitation_message: Result<&str, &str>) -> Outfit {
+    let jacket = match formality_level {
+        None => Jacket::Flowers,
+        Some(j) if j > 0 => Jacket::White,
+        _ => Jacket::Black,
+    };
+
+    let hat = match (formality_level, &invitation_message) {
+        (_, Ok(_)) => Hat::Fedora,
+        (None, Err(_)) => Hat::Baseball,
+        _=> Hat::Snapback,
+    };
+    Outfit{jacket, hat}
+}
+
