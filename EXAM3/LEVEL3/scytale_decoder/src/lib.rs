@@ -15,25 +15,24 @@
 }
  */
 
- pub fn scytale_decoder(s: String, letters_per_turn: u32) -> Option<String> {
+pub fn scytale_decoder(s: String, letters_per_turn: u32) -> Option<String> {
     if s.is_empty() || letters_per_turn == 0 {
         return None;
     }
 
     let len = s.len();
-    let rows = (len as f64 / letters_per_turn as f64).ceil() as usize;
-
+    let rows = (len + letters_per_turn as usize - 1) / letters_per_turn as usize;
     let mut decoded = vec![' '; len];
 
-    for i in 0..len {
+    for (i, c) in s.chars().enumerate() {
         let row = i / letters_per_turn as usize;
         let col = i % letters_per_turn as usize;
         let index = col * rows + row;
 
         if index < len {
-            decoded[index] = s.chars().nth(i).unwrap(); 
+            decoded[index] = c;
         }
     }
 
-    Some(decoded.iter().collect())
+    Some(decoded.into_iter().collect())
 }
