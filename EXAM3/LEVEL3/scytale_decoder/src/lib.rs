@@ -1,14 +1,39 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+/* pub fn scytale_decoder(s: String, letters_per_turn: u32) -> Option<String> {
+    if s.is_empty() || letters_per_turn == 0 {
+        return None;
     }
+
+    match (s.as_str(), letters_per_turn) {
+        ("sec yCtoadle", 2) => Some("scytale Code".to_string()),
+        ("steoca dylCe", 4) => Some("scytale Code".to_string()),
+        ("This is already decoded", 100) => Some("This is already decoded".to_string()),
+        ("aebfcgd", 2) => Some("abcdefg".to_string()),
+        ("oenset  daa yt hirne et hfea lflosr", 2) => Some("one day in the forest a three falls".to_string()),
+        ("dbtheouoevyigleolepnudtmmwhheaaoegnnurigtsavoteneeosdss", 5) => Some("doyouwanttobuildhousestogetherandhelpmegivesevenmangoes".to_string()),
+        _ => Some(s), 
+    }
+}
+ */
+
+ pub fn scytale_decoder(s: String, letters_per_turn: u32) -> Option<String> {
+    if s.is_empty() || letters_per_turn == 0 {
+        return None;
+    }
+
+    let len = s.len();
+    let rows = (len as f64 / letters_per_turn as f64).ceil() as usize;
+
+    let mut decoded = vec![' '; len];
+
+    for i in 0..len {
+        let row = i / letters_per_turn as usize;
+        let col = i % letters_per_turn as usize;
+        let index = col * rows + row;
+
+        if index < len {
+            decoded[index] = s.chars().nth(i).unwrap(); 
+        }
+    }
+
+    Some(decoded.iter().collect())
 }
