@@ -1,14 +1,31 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+use std::cell::Ref;
+use std::cell::RefCell;
+use std::cell::RefMut;
+
+#[derive(Debug, Default, PartialEq, Eq)]
+pub struct Car {
+    pub color: String,
+    pub plate: String,
+}
+#[derive(Debug)]
+pub struct RentalBusiness {
+    pub car: RefCell<Car>,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+impl RentalBusiness {
+    pub fn rent_car(&self) -> Ref<Car> {
+        self.car.borrow()
+    }
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    pub fn sell_car(&self) -> Car {
+        self.car.replace(Car::default()) 
+    }
+
+    pub fn repair_car(&self) -> RefMut<Car> {
+        self.car.borrow_mut()
+    }
+
+    pub fn change_car(&self, new_car: Car) {
+        *self.car.borrow_mut() = new_car;
     }
 }
