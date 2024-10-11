@@ -1,7 +1,4 @@
-use std::env;
-
 pub fn rpn(inputs: &str) {
-    let args: Vec<String> = env::args().collect();
     let mut stack = Vec::new();
 
     for input in inputs.split_whitespace() {

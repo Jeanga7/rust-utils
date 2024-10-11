@@ -1,14 +1,9 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+pub fn reverse_it(v: i32) -> String {
+    let num = v.abs().to_string();
+    let rev:String = num.chars().rev().collect();
+    if v < 0 {
+        format!("-{}{}",rev, num )
+    }else{
+        format!("{}{}",rev, num )
     }
 }
