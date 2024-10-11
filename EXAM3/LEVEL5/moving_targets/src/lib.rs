@@ -1,14 +1,44 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+pub struct Field {
+    head: Link,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+type Link = Option<Box<Node>>;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+struct Node {
+    elem: Target,
+    next: Link,
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct Target {
+    pub size: u32,
+    pub xp: u32,
+}
+
+impl Field {
+    pub fn new() -> Self {
+        Field { head: None }
+    }
+    
+    pub fn push(&mut self, target: Target) {
+        self.head = Some(Box::new(Node {
+            elem: target,
+            next: self.head.take(),
+        }));
+    }
+    
+    pub fn pop(&mut self) -> Option<Target> {
+        self.head.take().map(|node| {
+            self.head = node.next;
+            node.elem
+        })
+    }
+    
+    pub fn peek(&self) -> Option<&Target> {
+        self.head.as_ref().map(|node| &node.elem)
+    }
+    
+    pub fn peek_mut(&mut self) -> Option<&mut Target> {
+        self.head.as_mut().map(|node| &mut node.elem)
     }
 }
