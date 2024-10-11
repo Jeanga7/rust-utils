@@ -21,29 +21,17 @@ impl Queue {
         let new_person = Box::new(Person {
             discount,
             name,
-            next_person: None,
+            next_person: self.node.take(),
         });
-    
-        if self.node.is_none() {
-            self.node = Some(new_person);
-        } else {
-            let mut current = self.node.as_mut();
-            while let Some(person) = current {
-                if person.next_person.is_none() {
-                    person.next_person = Some(new_person);
-                    break;
-                }
-                current = person.next_person.as_mut();
-            }
-        }
+        self.node = Some(new_person);
     }
-    
+
     pub fn invert_queue(&mut self) {
         let mut prev: Link = None;
         let mut current = self.node.take();
-    
+
         while let Some(mut person) = current {
-            current = person.next_person;
+            current = person.next_person.take();
             person.next_person = prev;
             prev = Some(person);
         }
@@ -51,12 +39,23 @@ impl Queue {
     }
 
     pub fn rm(&mut self) -> Option<(String, i32)> {
-        if let Some(first_person) = self.node.take() {
-            let name = first_person.name.clone();
-            let discount = first_person.discount;
-            self.node = first_person.next_person; 
-            return Some((name, discount));
+        let mut current = &mut self.node;
+        
+        if current.is_none() {
+            return None;
         }
+    
+        if current.as_ref()?.next_person.is_none() {
+            return self.node.take().map(|person| (person.name, person.discount));
+        }
+    
+        while let Some(ref mut person) = current {
+            if person.next_person.as_ref()?.next_person.is_none() {
+                return person.next_person.take().map(|last_person| (last_person.name, last_person.discount));
+            }
+            current = &mut person.next_person;
+        }
+    
         None
     }
 
@@ -69,7 +68,7 @@ impl Queue {
             }
             current = &person.next_person;
         }
-        
+
         None
     }
 }
