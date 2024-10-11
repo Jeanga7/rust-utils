@@ -20,7 +20,7 @@ pub enum AccessLevel {
           _ => Some(&self.name),
       }
     }
-  }
+  } 
   
   pub fn check_user_name(user: &User) -> (bool, &str) {
     match user.send_name() {
