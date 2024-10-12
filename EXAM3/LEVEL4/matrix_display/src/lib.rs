@@ -1,14 +1,19 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+#[derive(Clone)]
+pub struct Matrix(pub Vec<Vec<i32>>);
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+impl Matrix {
+    pub fn new(slice: &[&[i32]]) -> Self {
+        Matrix(slice.iter().map(|&row| row.to_vec()).collect())
     }
 }
+
+use std::fmt;
+
+impl fmt::Display for Matrix {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        self.0.iter()
+            .map(|row| writeln!(f, "({})", row.iter().map(|c| c.to_string()).collect::<Vec<_>>().join(" ")))
+            .collect()
+    }
+}
+

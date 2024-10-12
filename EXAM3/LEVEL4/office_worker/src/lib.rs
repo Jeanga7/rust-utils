@@ -1,14 +1,35 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+#[derive(Debug, PartialEq, Eq)]
+pub struct OfficeWorker {
+    pub name: String,
+    pub age: u32,
+    pub role: WorkerRole,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+#[derive(Debug, PartialEq, Eq)]
+pub enum WorkerRole {
+    Admin,
+    User,
+    Guest,
+}
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+impl From<&str> for WorkerRole {
+    fn from(role_str: &str) -> Self {
+        match role_str {
+            "admin" => Self::Admin,
+            "user" => Self::User,
+            "guest" => Self::Guest,
+            _ => unreachable!(),
+        }
+    }
+}
+
+impl From<&str> for OfficeWorker {
+    fn from(worker_str: &str) -> Self {
+        let mut parts = worker_str.split(','); 
+        Self {
+            name: parts.next().unwrap().to_string(),
+            age: parts.next().unwrap().parse().unwrap(),
+            role: WorkerRole::from(parts.next().unwrap()),
+        }
     }
 }

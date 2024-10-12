@@ -1,14 +1,30 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+use std::ops::Add;
+use std::fmt::Debug;
+
+#[derive(Debug)]
+pub struct Garage<T: Add<Output = T> + Copy + Debug> {
+    pub left: Option<T>,
+    pub right: Option<T>,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+impl<T: Add<Output = T> + Copy + Debug> Garage<T> {
+    pub fn move_to_right(&mut self) {
+        if let Some(left_value) = self.left {
+            self.right = Some(match self.right {
+                Some(right_value) => right_value + left_value,
+                None => left_value,
+            });
+            self.left = None;
+        }
+    }
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    pub fn move_to_left(&mut self) {
+        if let Some(right_value) = self.right {
+            self.left = Some(match self.left {
+                Some(left_value) => left_value + right_value,
+                None => right_value,
+            });
+            self.right = None;
+        }
     }
 }
