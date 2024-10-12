@@ -1,5 +1,4 @@
 use std::cell::{RefCell, Cell};
-use std::rc::Rc;
 
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
 pub struct Blog {
@@ -11,7 +10,7 @@ impl Blog {
     pub fn new() -> Blog {
         Blog {
             drops: Cell::new(0),
-            states: RefCell::new(vec![]),
+            states: RefCell::new(Vec::new()),
         }
     }
 
@@ -30,11 +29,10 @@ impl Blog {
     }
 
     pub fn add_drop(&self, id: usize) {
-        let mut states = self.states.borrow_mut();
-        if states[id] {
+        if self.states.borrow_mut()[id] {
             panic!("{} is already dropped", id);
         }
-        states[id] = true;
+        self.states.borrow_mut()[id] = true;
         self.drops.set(self.drops.get() + 1);
     }
 }

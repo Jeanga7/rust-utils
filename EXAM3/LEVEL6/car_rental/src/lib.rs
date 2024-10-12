@@ -10,7 +10,7 @@ pub struct Car {
 #[derive(Debug)]
 pub struct RentalBusiness {
     pub car: RefCell<Car>,
-}
+} 
 
 impl RentalBusiness {
     pub fn rent_car(&self) -> Ref<Car> {
