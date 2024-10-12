@@ -4,7 +4,7 @@ pub fn parts_sums(arr: &[u64]) -> Vec<u64> {
 
     result.push(current_sum);
     
-    for &value in arr.into_iter().rev() {
+    for value in arr.iter().rev() {
         current_sum -= value;
         result.push(current_sum);
     }
