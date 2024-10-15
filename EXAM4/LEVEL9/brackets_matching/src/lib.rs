@@ -1,14 +1,14 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+pub fn is_brackets_matching(expression: &str) -> bool {
+    let mut stack = Vec::new();
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    for ch in expression.chars() {
+        match ch {
+            '(' | '[' | '{' => stack.push(ch),
+            ')' if stack.pop() != Some('(') => return false,
+            ']' if stack.pop() != Some('[') => return false,
+            '}' if stack.pop() != Some('{') => return false,
+            _ => {}
+        }
     }
+    stack.is_empty()
 }
