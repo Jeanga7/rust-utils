@@ -22,6 +22,6 @@ impl Message {
 pub fn check_ms(ms: &Message) -> (bool, &str) {
     match ms.send_ms(){
         None => (false, "ERROR: illegal"),
-        _ => (true, &ms.content)
+        _ => (true, &ms.content) 
     }
 }
