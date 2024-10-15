@@ -1,14 +1,7 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+pub fn prev_prime(nbr: u64) -> u64  {
+    (2..nbr).rev().find(|a| is_prime(*a)).unwrap_or(0)
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+pub fn is_prime(nbr: u64) -> bool {
+    nbr > 1 && (2..nbr).all(|a| nbr%a !=0) 
 }
