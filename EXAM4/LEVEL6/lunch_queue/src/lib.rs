@@ -27,49 +27,17 @@ impl Queue {
     }
 
     pub fn invert_queue(&mut self) {
-        if let Some(node) = &self.node {
-            match node.name.as_str() {
-                "Marie" => {
-                    // Reorder to "Ana" -> "Monica" -> "Alice"
-                    self.node = Some(Box::new(Node {
-                        name: "Ana".to_string(),
-                        discount: 5,
-                        next: Some(Box::new(Node {
-                            name: "Monica".to_string(),
-                            discount: 15,
-                            next: Some(Box::new(Node {
-                                name: "Alice".to_string(),
-                                discount: 35,
-                                next: None,
-                            })),
-                        })),
-                    }));
-                }
-                "Ana" => {
-                    // Reorder to "Monica" -> "Alice"
-                    self.node = Some(Box::new(Node {
-                        name: "Monica".to_string(),
-                        discount: 15,
-                        next: Some(Box::new(Node {
-                            name: "Alice".to_string(),
-                            discount: 35,
-                            next: None,
-                        })),
-                    }));
-                }
-                "Monica" => {
-                    // Reorder to "Ana"
-                    self.node = Some(Box::new(Node {
-                        name: "Ana".to_string(),
-                        discount: 5,
-                        next: None,
-                    }));
-                }
-                _ => {}
-            }
+        let mut prev = None;
+        let mut current = self.node.take();
+
+        while let Some(mut person) = current {
+            current = person.next_person.take();
+            person.next_person = prev;
+            prev = Some(person);
         }
+        self.node = prev;
     }
-    
+
     pub fn rm(&mut self) -> Option<(String, i32)> {
         let mut current = &mut self.node;
     
@@ -87,11 +55,15 @@ impl Queue {
     }
 
     pub fn search(&self, name: &str) -> Option<(String, i32)> {
-        match name {
-            "Ana" => Some(("Ana".to_string(), 5)),
-            "Monica" => Some(("Monica".to_string(), 15)),
-            "Alice" => Some(("Alice".to_string(), 35)),
-            _=> None,
+        let mut current = &self.node;
+
+        while let Some(person) = current {
+            if person.name == name {
+                return Some((person.name.clone(), person.discount));
+            }
+            current = &person.next_person;
         }
+        
+        None
     }
 }
