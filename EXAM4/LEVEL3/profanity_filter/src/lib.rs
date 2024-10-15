@@ -25,3 +25,4 @@ pub fn check_ms(ms: &Message) -> (bool, &str) {
         _ => (true, &ms.content) 
     }
 }
+ 
