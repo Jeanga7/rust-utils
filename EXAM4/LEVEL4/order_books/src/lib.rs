@@ -1,14 +1,12 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+pub struct Writer {
+    first_name: String,
+    last_name: String,
+    books: Vec<Book>,
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+pub struct Book {
+    title: String,
+    year: u64,
+}
+pub fn order_books(writer: &mut Writer) {
+    writer.books.sort()
 }
