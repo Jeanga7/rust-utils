@@ -1,14 +1,45 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+pub fn rpn(inputs: &str) {
+    let mut stack = Vec::new();
+    for input in inputs.split_whitespace() {
+        if let Ok(num) = input.parse::<i64>() {
+            stack.push(num);
+        } else if stack.len() >= 2 {
+            let (n2, n1) = (stack.pop().unwrap(), stack.pop().unwrap());
+            let result = match input {
+                "+" => Some(n1 + n2),
+                "-" => Some(n1 - n2),
+                "*" => Some(n1 * n2),
+                "/" => {
+                    if n2 != 0 {
+                        Some(n1 / n2)
+                    } else {
+                        None
+                    }
+                }
+                "%" => {
+                    if n2 != 0 {
+                        Some(n1 % n2)
+                    } else {
+                        None
+                    }
+                }
+                _ => None,
+            };
+            if let Some(res) = result {
+                stack.push(res);
+            } else {
+                println!("Error");
+                return;
+            }
+        } else {
+            println!("Error");
+            return;
+        }
+    }
+    
+    if stack.len() == 1 {
+        println!("{}", stack[0]);
+    } else {
+        println!("Error");
     }
 }
