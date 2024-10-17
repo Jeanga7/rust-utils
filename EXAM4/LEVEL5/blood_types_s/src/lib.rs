@@ -52,7 +52,8 @@ impl BloodType {
         ];
 
         all_blood_types
-            .into_iter()
+            .iter()
+            .cloned()
             .filter(|blood_type| {
                 if as_donor {
                     self.can_receive_from(blood_type)

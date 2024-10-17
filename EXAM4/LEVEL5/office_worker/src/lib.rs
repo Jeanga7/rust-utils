@@ -25,11 +25,12 @@ impl From<&str> for WorkerRole {
 
 impl From<&str> for OfficeWorker {
     fn from(worker_str: &str) -> Self {
-        let mut parts = worker_str.split(','); 
+        let parts: Vec<_> = worker_str.split(',').collect();
         Self {
-            name: parts.next().unwrap().to_string(),
-            age: parts.next().unwrap().parse().unwrap(),
-            role: WorkerRole::from(parts.next().unwrap()),
+            name: parts[0].to_string(),
+            age: parts[1].parse().unwrap(),
+            role: WorkerRole::from(parts[2]),
         }
     }
 }
+
