@@ -117,4 +117,4 @@ else
     echo -e "${RED}🚫 Aucune modification détectée. Pas de push.${RESET}"
 fi
 
-echo -e "${GREEN}✅=====================FIN DE SCRIPT=====================✅${RESET}"
+echo -e "${GREEN}✅=================================FIN DE SCRIPT=================================✅${RESET}"
