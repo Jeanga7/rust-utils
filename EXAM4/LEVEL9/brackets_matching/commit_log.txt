@@ -1,5 +1,0 @@
-[2024-10-17 16:12:47] Projet : rust-utils | Message : 2024-10-17 16:12:47 dans les dossiers : backup_20241017_123808
-commit_log.txt
-EXAM4
-push.sh
-[2024-10-17 16:19:30] Projet : rust-utils | Message : [A
