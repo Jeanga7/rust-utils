@@ -6,7 +6,7 @@ configure_git_user() {
     read -p "🔗 Entrez votre adresse email : " user_email
     read -p "👤 Entrez votre nom d'utilisateur : " user_name
 
-    # Configuration Git
+    # ?Configuration Git
     git config --global user.email "$user_email"
     git config --global user.name "$user_name"
     echo -e "\033[1;32m✅ Configuration enregistrée :\033[0m"
@@ -26,7 +26,7 @@ YELLOW="\033[1;33m"
 BLUE="\033[1;34m"
 RESET="\033[0m"
 
-#? Vérifier si l'email et le nom d'utilisateur sont déjà configurés
+# ?Vérifier si l'email et le nom d'utilisateur sont déjà configurés
 if ! git config --global user.email > /dev/null; then
     configure_git_user
 fi
@@ -59,7 +59,7 @@ else
         echo -e "${GREEN}✅ Pull effectué.${RESET}"
     fi
 
-    #? Demander à l'utilisateur s'il veut appliquer le stash
+    # ?Demander à l'utilisateur s'il veut appliquer le stash
     read -p "🔄 Voulez-vous appliquer le stash ? (o/n) : " apply_stash
     if [[ "$apply_stash" == "o" ]]; then
         git stash apply
@@ -67,7 +67,7 @@ else
     fi
 fi
 
-#? Vérifier s'il y a des modifications
+# ?Vérifier s'il y a des modifications
 if [ -n "$(git status --porcelain)" ]; then
     # ?Obtenir la liste des fichiers modifiés
     modified_files=$(git diff --name-only)
@@ -116,3 +116,5 @@ if [ -n "$(git status --porcelain)" ]; then
 else
     echo -e "${RED}🚫 Aucune modification détectée. Pas de push.${RESET}"
 fi
+
+echo -e "${GREEN}✅=====================FIN DE SCRIPT=====================✅${RESET}"

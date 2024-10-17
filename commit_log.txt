@@ -1,0 +1,2 @@
+[2024-10-17 12:32:00] Projet : rust-utils | Message : 2024-10-17 12:32:00 dans les dossiers : EXAM4
+push.sh
