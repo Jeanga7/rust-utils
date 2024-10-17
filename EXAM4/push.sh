@@ -97,6 +97,7 @@ if [ -n "$(git status --porcelain)" ]; then
             cp "$absolute_path" "$backup_dir/"
             echo -e "${GREEN}✅ Fichier '$absolute_path' sauvegardé dans le dossier : $backup_dir${RESET}"
         else
+            cp "$backup_dir/"
             echo -e "${RED}⚠️ Le fichier '$absolute_path' n'existe pas, il n'a pas été copié.${RESET}"
         fi
     done

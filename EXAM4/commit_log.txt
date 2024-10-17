@@ -1,0 +1,2 @@
+[2024-10-18 00:51:28] Projet : rust-utils | Message : 2024-10-18 00:51:28 dans les dossiers : backup_20241017_173325
+EXAM4
