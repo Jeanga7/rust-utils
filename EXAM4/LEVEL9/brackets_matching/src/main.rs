@@ -22,6 +22,10 @@ fn is_correctly_bracketed(expression: &str) -> bool {
 fn main() {
     let args: Vec<String> = env::args().collect();
 
+    if args.len() <= 1 {
+        return;
+    }
+
     for arg in &args[1..] {
         if is_correctly_bracketed(arg) {
             println!("OK");
