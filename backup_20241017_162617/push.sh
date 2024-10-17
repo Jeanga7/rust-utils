@@ -16,7 +16,7 @@ configure_git_user() {
 
 # ?Fonction pour écrire dans le fichier journal
 log_commit() {
-    echo "$1" >> commit_log.txt
+    echo "$1" >>commit_log.txt
 }
 
 # !Couleurs
@@ -27,11 +27,11 @@ BLUE="\033[1;34m"
 RESET="\033[0m"
 
 # ?Vérifier si l'email et le nom d'utilisateur sont déjà configurés
-if ! git config --global user.email > /dev/null; then
+if ! git config --global user.email >/dev/null; then
     configure_git_user
 fi
 
-if ! git config --global user.name > /dev/null; then
+if ! git config --global user.name >/dev/null; then
     configure_git_user
 fi
 
@@ -87,16 +87,41 @@ if [ -n "$(git status --porcelain)" ]; then
     # ?Sauvegarde des fichiers modifiés
     backup_dir="backup_$(date '+%Y%m%d_%H%M%S')"
     mkdir -p "$backup_dir"
-    cp $modified_files "$backup_dir/"
-    echo -e "${GREEN}💾 Sauvegarde des fichiers modifiés effectuée dans le dossier : $backup_dir${RESET}"
+
+    # Copier les fichiers modifiés dans le dossier de sauvegarde
+    for file in $modified_files; do
+        # Obtenir le chemin absolu du fichier
+        absolute_path=$(realpath "$file" 2>/dev/null)
+
+        if [ -f "$absolute_path" ]; then
+            cp "$absolute_path" "$backup_dir/"
+            echo -e "${GREEN}✅ Fichier '$absolute_path' sauvegardé dans le dossier : $backup_dir${RESET}"
+        else
+            echo -e "${RED}⚠️ Le fichier '$absolute_path' n'existe pas, il n'a pas été copié.${RESET}"
+        fi
+    done
+
+    # Vérifier si le dossier de sauvegarde est vide
+    if [ -z "$(ls -A "$backup_dir")" ]; then
+        echo -e "${RED}🚫 Aucun fichier n'a été sauvegardé, le dossier de sauvegarde est vide.${RESET}"
+        rmdir "$backup_dir" # Supprimer le dossier vide
+    else
+        echo -e "${GREEN}💾 Sauvegarde des fichiers modifiés effectuée dans le dossier : $backup_dir${RESET}"
+    fi
 
     # ?Demander un message de commit ou utiliser le message par défaut
     read -p "✏️ Entrez un message de commit (laisser vide pour utiliser le message par défaut) : " custom_message
     commit_message="${custom_message:-$current_time dans les dossiers : $modified_dirs}"
 
     git add .
-    git commit -m "$commit_message" || { echo -e "${RED}⚠️ Erreur lors du commit.${RESET}"; exit 1; }
-    git push || { echo -e "${RED}⚠️ Erreur lors du push.${RESET}"; exit 1; }
+    git commit -m "$commit_message" || {
+        echo -e "${RED}⚠️ Erreur lors du commit.${RESET}"
+        exit 1
+    }
+    git push || {
+        echo -e "${RED}⚠️ Erreur lors du push.${RESET}"
+        exit 1
+    }
 
     # ?Journaliser le commit
     log_commit "[$current_time] Projet : $project_name | Message : $commit_message"
