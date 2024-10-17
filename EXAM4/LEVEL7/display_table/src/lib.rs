@@ -22,10 +22,9 @@ impl Table {
 impl fmt::Display for Table {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         if self.headers.is_empty() && self.body.is_empty() {
-            return Ok(()); // Ne rien afficher si la table est vide
+            return Ok(()); 
         }
 
-        // Calculer la largeur maximale pour chaque colonne
         let mut column_widths: Vec<usize> = self.headers.iter().map(|h| h.len()).collect();
         for row in &self.body {
             for (i, cell) in row.iter().enumerate() {
@@ -48,7 +47,7 @@ impl fmt::Display for Table {
         // Afficher le séparateur avec `+` entre les colonnes
         for (i, &width) in column_widths.iter().enumerate() {
             if i > 0 {
-                write!(f, "+")?; // Ajouter le `+` entre les colonnes
+                write!(f, "+")?; 
             }
             write!(f, "{:-^width$}", "-", width = width + 2)?;
         }
