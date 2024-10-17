@@ -18,7 +18,7 @@ fn is_correctly_bracketed(expression: &str) -> bool {
     }
     stack.is_empty()
 }
-
+   
 fn main() {
     let args: Vec<String> = env::args().collect();
 
