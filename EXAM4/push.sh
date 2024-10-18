@@ -120,16 +120,13 @@ if [ -n "$(git status --porcelain)" ]; then
         echo -e "3) 📚 docs:   Modifications de la documentation"
         echo -e "4) 🎨 style:  Modifications du style (formatage, absence de changement de code)"
         echo -e "5) 🚀 chore:  Autres changements (outils de construction, configuration, etc.)"
+
+        # Demander à l'utilisateur de choisir un type de commit
+        read -p "➡️ Entrez le numéro du type de commit (1-5) : " commit_choice
     }
 
     # ? Générer un message de commit par défaut formaté
     generate_commit_message() {
-        # Appeler la fonction pour afficher les types de commits
-        display_commit_types
-
-        # Demander à l'utilisateur de choisir un type de commit
-        read -p "➡️ Entrez le numéro du type de commit (1-5) : " commit_choice
-
         # Déterminer le type de commit basé sur le choix de l'utilisateur
         case "$commit_choice" in
         1) local commit_type="feat" ;;
@@ -172,6 +169,8 @@ if [ -n "$(git status --porcelain)" ]; then
         echo -e "$commit_message"
     }
 
+    # Appeler la fonction pour afficher les types de commits
+    display_commit_types
     # ?Utiliser le message personnalisé ou le message généré par défaut
     custom_message=$(generate_commit_message)
     read -p "✏️ Entrez un message de commit (laisser vide pour utiliser le message par défaut) : " user_message
