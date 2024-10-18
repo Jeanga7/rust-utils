@@ -90,14 +90,17 @@ if [ -n "$(git status --porcelain)" ]; then
 
     # Copier les fichiers modifiés dans le dossier de sauvegarde
     for file in $modified_files; do
-        # Obtenir le chemin absolu du fichier
-        absolute_path=$(realpath "$file" 2>/dev/null)
+        # Construire le chemin complet en joignant le nom du projet et le fichier
+        racine="$(git rev-parse --show-toplevel)"
+        full_path="$racine/$file"
 
-        if [ -f "$absolute_path" ]; then
-            cp "$absolute_path" "$backup_dir/"
-            echo -e "${GREEN}✅ Fichier '$absolute_path' sauvegardé dans le dossier : $backup_dir${RESET}"
+        # Vérifier si le fichier existe avant de le copier
+        if [ -f "$full_path" ]; then
+            # Copier le fichier en préservant les arborescences de répertoire
+            cp --parents "$full_path" "$backup_dir/"
+            echo -e "${GREEN}✅ Fichier '$full_path' sauvegardé dans le dossier : $backup_dir${RESET}"
         else
-            echo -e "${RED}⚠️ Le fichier '$absolute_path' n'existe pas, il n'a pas été copié.${RESET}"
+            echo -e "${RED}⚠️ Le fichier '$full_path' n'existe pas, il n'a pas été copié.${RESET}"
         fi
     done
 
@@ -143,4 +146,3 @@ else
 fi
 
 echo -e "${GREEN}✅===================================FIN DE SCRIPT===================================✅${RESET}"
-
