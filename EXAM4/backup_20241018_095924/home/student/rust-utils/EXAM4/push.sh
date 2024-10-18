@@ -112,8 +112,6 @@ if [ -n "$(git status --porcelain)" ]; then
         echo -e "${GREEN}💾 Sauvegarde des fichiers modifiés effectuée dans le dossier : $backup_dir${RESET}"
     fi
 
-    # ?Demander un message de commit ou utiliser le message par défaut
-    read -p "✏️ Entrez un message de commit (laisser vide pour utiliser le message par défaut) : " custom_message
     # ?Générer un message de commit par défaut formaté
     generate_commit_message() {
         # Type par défaut : "chore" (peut être ajusté en fonction du contexte)
