@@ -7,6 +7,7 @@ configure_git_user() {
     read -p "👤 Entrez votre nom d'utilisateur : " user_name
 
     # ?Configuration Git
+    git config --global credential.helper store
     git config --global user.email "$user_email"
     git config --global user.name "$user_name"
     echo -e "\033[1;32m✅ Configuration enregistrée :\033[0m"
