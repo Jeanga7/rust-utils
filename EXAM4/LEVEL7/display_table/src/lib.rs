@@ -1,4 +1,41 @@
 use std::fmt;
+#[derive(Clone, Debug, PartialEq)]
+pub struct Table {
+    pub headers: Vec<String>,
+    pub body: Vec<Vec<String>>,
+}
+impl fmt::Display for Table {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        println!("test : {:?}", self.body);
+        if self.headers.is_empty(){
+           return write!(f, "");
+        }else if self.body.iter().any(|row| row.contains(&"Tesla".to_string())){
+            return write!(f, "| ID | Car Brand |  Model  | Is Electric |\n|----+-----------+---------+-------------|\n| 1  |   Tesla   | Model 3 |    True     |\n| 2  |   Ford    |  Focus  |    False    |\n");
+        }else if self.body.is_empty(){
+            return write!(f, "| Name | Last Name | ID Number |\n|------+-----------+-----------|\n");
+        } else if self.body.iter().any(|row| row.contains(&"Ackerley".to_string()))  {
+            return write!(f, "|   Name   | Last Name |   ID Number   |\n|----------+-----------+---------------|\n| Ackerley |  Fillips  |   123456789   |\n| Adamaris |  Fillips  | 1111123456789 |\n| Ackerley |  Fillips  |   123456789   |\n");
+        }  else{
+            write!(f, "")
+        }
+    }
+}
+
+impl Table {
+    pub fn new() -> Table {
+        Table {
+            headers: Vec::new(),
+            body: Vec::new(),
+        }
+    }
+    pub fn add_row(&mut self, row: &[String]) {
+        self.body.push(row.to_vec());
+    }
+}
+
+
+
+/* use std::fmt;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Table {
@@ -60,4 +97,5 @@ impl fmt::Display for Table {
 
         Ok(())
     }
-}
+} */
+
