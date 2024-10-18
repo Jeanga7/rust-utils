@@ -112,15 +112,20 @@ if [ -n "$(git status --porcelain)" ]; then
         echo -e "${GREEN}💾 Sauvegarde des fichiers modifiés effectuée dans le dossier : $backup_dir${RESET}"
     fi
 
-    # ?Générer un message de commit par défaut formaté avec des thèmes et des emojis
-    generate_commit_message() {
-        # Présentation des types de commits avec des emojis
+    # Fonction pour afficher les types de commits avec des emojis
+    display_commit_types() {
         echo -e "\n🔍 Choisissez un type de commit :"
         echo -e "1) 🎉 feat:   Une nouvelle fonctionnalité"
         echo -e "2) 🐛 fix:    Correction de bogue"
         echo -e "3) 📚 docs:   Modifications de la documentation"
         echo -e "4) 🎨 style:  Modifications du style (formatage, absence de changement de code)"
         echo -e "5) 🚀 chore:  Autres changements (outils de construction, configuration, etc.)"
+    }
+
+    # ? Générer un message de commit par défaut formaté
+    generate_commit_message() {
+        # Appeler la fonction pour afficher les types de commits
+        display_commit_types
 
         # Demander à l'utilisateur de choisir un type de commit
         read -p "➡️ Entrez le numéro du type de commit (1-5) : " commit_choice
@@ -158,9 +163,15 @@ if [ -n "$(git status --porcelain)" ]; then
         local footer="🗓️ Date : $current_time"
 
         # Construction du message final formaté selon le style conventionnel
-        echo -e "$commit_type($scope): $subject\n\n$body\n$footer"
+        commit_message="$commit_type($scope): $subject\n\n$body\n$footer"
+
+        # Afficher le message de commit pour confirmation
+        echo -e "\n📜 Message de commit généré :\n$commit_message"
+
+        # Retourner le message de commit
+        echo -e "$commit_message"
     }
-    
+
     # ?Utiliser le message personnalisé ou le message généré par défaut
     custom_message=$(generate_commit_message)
     read -p "✏️ Entrez un message de commit (laisser vide pour utiliser le message par défaut) : " user_message
