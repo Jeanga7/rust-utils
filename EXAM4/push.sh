@@ -10,9 +10,25 @@ configure_git_user() {
     git config --global credential.helper store
     git config --global user.email "$user_email"
     git config --global user.name "$user_name"
+
     echo -e "\033[1;32m✅ Configuration enregistrée :\033[0m"
     echo -e "📧 Email : $user_email"
     echo -e "📝 Nom d'utilisateur : $user_name"
+
+    # Demander à l'utilisateur ses identifiants et les stocker dans un fichier
+    echo -e "\033[1;34m🔑 Entrez vos identifiants Git (laisser vide pour ignorer) :\033[0m"
+    read -p "🔑 Utilisateur : " git_user
+    read -sp "🔑 Mot de passe : " git_password
+    echo
+
+    # Vérifier si les identifiants sont fournis
+    if [[ -n "$git_user" && -n "$git_password" ]]; then
+        # Créer ou mettre à jour le fichier de stockage des identifiants
+        echo "https://$git_user:$git_password@github.com" >~/.git-credentials
+        echo -e "\033[1;32m✅ Identifiants enregistrés.\033[0m"
+    else
+        echo -e "\033[1;33m⚠️ Aucuns identifiants fournis.\033[0m"
+    fi
 }
 
 # ?Fonction pour écrire dans le fichier journal
@@ -195,9 +211,9 @@ if [ -n "$(git status --porcelain)" ]; then
     read -p "🗑️ Voulez-vous supprimer le dossier de sauvegarde '$backup_dir' ? (o/n) : " delete_backup
     if [[ "$delete_backup" == "o" ]]; then
         rm -r "$backup_dir"
-        echo -e "${GREEN}✅ Dossier de sauvegarde supprimé.${RESET}"
+        echo -e "${GREEN}✅===========================DOSSIER DE SAUVEGARDE SUPPRIMÉ===========================✅${RESET}"
     else
-        echo -e "${GREEN}📦 Le dossier de sauvegarde a été conservé.${RESET}"
+        echo -e "${GREEN}📦======================LE DOSSIER DE SAUVEGARDE A ETE CONSERVER======================📦${RESET}"
     fi
 else
     echo -e "${RED}🚫 Aucune modification détectée. Pas de push.${RESET}"
