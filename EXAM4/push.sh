@@ -112,10 +112,32 @@ if [ -n "$(git status --porcelain)" ]; then
         echo -e "${GREEN}💾 Sauvegarde des fichiers modifiés effectuée dans le dossier : $backup_dir${RESET}"
     fi
 
-    # ?Générer un message de commit par défaut formaté
+    # ?Générer un message de commit par défaut formaté avec des thèmes et des emojis
     generate_commit_message() {
-        # Type par défaut : "chore" (peut être ajusté en fonction du contexte)
-        local commit_type="chore"
+        # Présentation des types de commits avec des emojis
+        echo -e "\n🔍 Choisissez un type de commit :"
+        echo -e "1) 🎉 feat:   Une nouvelle fonctionnalité"
+        echo -e "2) 🐛 fix:    Correction de bogue"
+        echo -e "3) 📚 docs:   Modifications de la documentation"
+        echo -e "4) 🎨 style:  Modifications du style (formatage, absence de changement de code)"
+        echo -e "5) 🚀 chore:  Autres changements (outils de construction, configuration, etc.)"
+
+        # Demander à l'utilisateur de choisir un type de commit
+        read -p "➡️ Entrez le numéro du type de commit (1-5) : " commit_choice
+
+        # Déterminer le type de commit basé sur le choix de l'utilisateur
+        case "$commit_choice" in
+        1) local commit_type="feat" ;;
+        2) local commit_type="fix" ;;
+        3) local commit_type="docs" ;;
+        4) local commit_type="style" ;;
+        5) local commit_type="chore" ;;
+        *)
+            echo -e "${RED}❌ Choix invalide, le type de commit par défaut sera utilisé : chore.${RESET}"
+            local commit_type="chore"
+            ;;
+        esac
+
         local scope="$project_name"
         local subject="Mises à jour"
 
@@ -128,17 +150,17 @@ if [ -n "$(git status --porcelain)" ]; then
         fi
 
         # Corps du message : afficher la liste des fichiers modifiés et les dossiers concernés
-        local body="Fichiers modifiés :\n"
+        local body="📂 Fichiers modifiés :\n"
         body+="$modified_files\n\n"
-        body+="Dossiers impactés : $modified_dirs\n"
+        body+="📁 Dossiers impactés : $modified_dirs\n"
 
         # Footer : inclure la date et l'heure du commit
-        local footer="Date : $current_time"
+        local footer="🗓️ Date : $current_time"
 
         # Construction du message final formaté selon le style conventionnel
         echo -e "$commit_type($scope): $subject\n\n$body\n$footer"
     }
-
+    
     # ?Utiliser le message personnalisé ou le message généré par défaut
     custom_message=$(generate_commit_message)
     read -p "✏️ Entrez un message de commit (laisser vide pour utiliser le message par défaut) : " user_message
