@@ -125,7 +125,6 @@ if [ -n "$(git status --porcelain)" ]; then
         read -p "➡️ Entrez le numéro du type de commit (1-5) : " commit_choice
     }
 
-    # ? Générer un message de commit par défaut formaté
     generate_commit_message() {
         # Déterminer le type de commit basé sur le choix de l'utilisateur
         case "$commit_choice" in
@@ -152,27 +151,23 @@ if [ -n "$(git status --porcelain)" ]; then
         fi
 
         # Corps du message : afficher la liste des fichiers modifiés et les dossiers concernés
-        local body="📂 Fichiers modifiés :\n"
-        body+="$modified_files\n\n"
-        body+="📁 Dossiers impactés : $modified_dirs\n"
+        local body="📂 Fichiers modifiés :\n$modified_files\n\n📁 Dossiers impactés : $modified_dirs"
 
         # Footer : inclure la date et l'heure du commit
         local footer="🗓️ Date : $current_time"
 
         # Construction du message final formaté selon le style conventionnel
-        commit_message="$commit_type($scope): $subject\n\n$body\n$footer"
+        commit_message="$commit_type($scope): $subject\n\n$body\n\n$footer"
 
-        # Afficher le message de commit pour confirmation
-        echo -e "\n📜 Message de commit généré :\n$commit_message"
-
-        # Retourner le message de commit
-        echo -e "$commit_message"
+        # Retourner le message de commit généré
+        echo "$commit_message"
     }
 
     # Appeler la fonction pour afficher les types de commits
     display_commit_types
     # ?Utiliser le message personnalisé ou le message généré par défaut
     custom_message=$(generate_commit_message)
+    echo -e "\n📜 Message de commit généré :\n$custom_message"
     read -p "✏️ Entrez un message de commit (laisser vide pour utiliser le message par défaut) : " user_message
     commit_message="${user_message:-$custom_message}"
 
