@@ -1,6 +1,0 @@
-[2024-10-18 00:51:28] Projet : rust-utils | Message : 2024-10-18 00:51:28 dans les dossiers : backup_20241017_173325
-EXAM4
-[2024-10-18 00:54:39] Projet : rust-utils | Message : 2024-10-18 00:54:39 dans les dossiers : backup_20241017_173325
-EXAM4
-[2024-10-18 01:06:08] Projet : rust-utils | Message : 2024-10-18 01:06:08 dans les dossiers : backup_20241017_173325
-EXAM4

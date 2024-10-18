@@ -114,13 +114,45 @@ if [ -n "$(git status --porcelain)" ]; then
 
     # ?Demander un message de commit ou utiliser le message par défaut
     read -p "✏️ Entrez un message de commit (laisser vide pour utiliser le message par défaut) : " custom_message
-    commit_message="${custom_message:-$current_time dans les dossiers : $modified_dirs}"
+    # ?Générer un message de commit par défaut formaté
+    generate_commit_message() {
+        # Type par défaut : "chore" (peut être ajusté en fonction du contexte)
+        local commit_type="chore"
+        local scope="$project_name"
+        local subject="Mises à jour"
 
+        # Vérifier le nombre de fichiers modifiés pour ajuster le sujet
+        local file_count=$(echo "$modified_files" | wc -l)
+        if [ "$file_count" -eq 1 ]; then
+            subject="Modification du fichier : $modified_files"
+        else
+            subject="Modifications multiples dans $file_count fichiers"
+        fi
+
+        # Corps du message : afficher la liste des fichiers modifiés et les dossiers concernés
+        local body="Fichiers modifiés :\n"
+        body+="$modified_files\n\n"
+        body+="Dossiers impactés : $modified_dirs\n"
+
+        # Footer : inclure la date et l'heure du commit
+        local footer="Date : $current_time"
+
+        # Construction du message final formaté selon le style conventionnel
+        echo -e "$commit_type($scope): $subject\n\n$body\n$footer"
+    }
+
+    # ?Utiliser le message personnalisé ou le message généré par défaut
+    custom_message=$(generate_commit_message)
+    read -p "✏️ Entrez un message de commit (laisser vide pour utiliser le message par défaut) : " user_message
+    commit_message="${user_message:-$custom_message}"
+
+    # ?Ajouter les fichiers et faire le commit
     git add .
     git commit -m "$commit_message" || {
         echo -e "${RED}⚠️ Erreur lors du commit.${RESET}"
         exit 1
     }
+
     git push || {
         echo -e "${RED}⚠️ Erreur lors du push.${RESET}"
         exit 1
