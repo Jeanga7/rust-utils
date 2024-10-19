@@ -5,9 +5,7 @@ pub fn remove_letter_sensitive(s: &str, letter: char) -> String {
 pub fn remove_letter_insensitive(s: &str, letter: char) -> String {
     let upper = letter.to_ascii_uppercase();
     let lower = letter.to_ascii_lowercase();
-    s.chars()
-        .filter(|&c| c != upper && c != lower)
-        .collect()
+    s.replace(upper, "").replace(lower, "")
 }
 
 pub fn swap_letter_case(s: &str, letter: char) -> String {
