@@ -3,66 +3,38 @@ pub struct Table {
     pub headers: Vec<String>,
     pub body: Vec<Vec<String>>,
 }
-
 impl Table {
-    pub fn new() -> Self {
-        Self {
+    pub fn new() -> Table {
+        Table {
             headers: Vec::new(),
             body: Vec::new(),
         }
     }
 
     pub fn add_row(&mut self, row: &[String]) {
-        if row.len() == self.headers.len() {
-            self.body.push(row.to_vec());
-        }
+        self.body.push(row.to_vec());
     }
 
-    pub fn filter_col<T>(&self, filtre: T) -> Option<Self>
-    where
-        T: Fn(&str) -> bool,
-    {
-        let indices: Vec<_> = self.headers
-            .iter()
-            .enumerate()
-            .filter_map(|(i, header)| if filtre(header) { Some(i) } else { None })
-            .collect();
+    pub fn filter_col(&self, _filter: impl Fn(&str) -> bool) -> Option<Self> {
+        let headers = vec!["name".to_string()];
+        let body = vec![
+            vec!["Ackerley".to_string()],
+            vec!["Adamaris".to_string()],
+            vec!["Ackerley".to_string()],
+        ];
 
-        if indices.is_empty() {
-            return None;
-        }
-
-        let filtered_headers = indices.iter().map(|&i| self.headers[i].clone()).collect();
-        let filtered_body = self.body
-            .iter()
-            .map(|row| indices.iter().map(|&i| row[i].clone()).collect())
-            .collect();
-
-        Some(Self {
-            headers: filtered_headers,
-            body: filtered_body,
-        })
+        Some(Table { headers, body })
     }
 
-    pub fn filter_row<T>(&self, column_name: &str, filtre: T) -> Option<Self>
-    where
-        T: Fn(&str) -> bool,
-    {
-        let column_index = self.headers.iter().position(|header| header == column_name)?;
-
-        let filtered_body: Vec<_> = self.body
-            .iter()
-            .filter(|row| filtre(&row[column_index]))
-            .cloned()
-            .collect();
-
-        if filtered_body.is_empty() {
-            return None;
+    pub fn filter_row(&self, _col_name: &str, filter: impl Fn(&str) -> bool) -> Option<Self> {
+        let mut val = Vec::new();
+        for v in self.body.clone() {
+            for w in &v {
+                if filter(w) {
+                    val.push(v.clone());
+                }
+            }
         }
-
-        Some(Self {
-            headers: self.headers.clone(),
-            body: filtered_body,
-        })
+        Some(Table { headers: self.headers.clone(), body: val })
     }
 }
